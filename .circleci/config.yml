@@ -1,0 +1,17 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Download ARM Compiler
+          command: wget https://developer.arm.com/-/media/Files/downloads/compiler/DS500-PA-00003-r5p0-25rel0.tgz?revision=ee19e01a-f471-4b78-8b9e-1b13d9f90e4f?product=Downloads,,Linux,5.06%20update%206
+      - run:
+          name: unzip
+          command: tar -xzvf DS500-PA-00003-r5p0-25rel0.tgz?revision=ee19e01a-f471-4b78-8b9e-1b13d9f90e4f?product=Downloads,,Linux,5.06%20update%206
+      - run:
+          name: check ls
+          command: ls -l
