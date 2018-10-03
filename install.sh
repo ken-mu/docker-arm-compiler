@@ -2,6 +2,6 @@
 
 expect -c "
 spawn sh /tmp/setup.sh
-expect \"password:\"
+expect \"Do you want to proceed with the installation? [default: yes]\"
 send \"yes\n\"
 "
