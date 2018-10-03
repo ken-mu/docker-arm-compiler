@@ -17,7 +17,7 @@ jobs:
           command: tar -xzvf DS500-PA-00003-r5p0-25rel0.tgz?revision=ee19e01a-f471-4b78-8b9e-1b13d9f90e4f?product=Downloads,,Linux,5.06%20update%206
       - run:
           name: Change permission
-          command: chmod 755 -R ./Installer
+          command: chmod 755 ./Installer/setup.sh && ll ./Installer
       - run:
           name: Build Dockerfile
           command: docker build -t arm-compiler .
