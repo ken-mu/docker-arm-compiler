@@ -19,3 +19,4 @@ expect -c "
 
   expect eof
 "
+export PATH="$PATH:/usr/local/ARM_Compiler_5.06u6/bin64"
