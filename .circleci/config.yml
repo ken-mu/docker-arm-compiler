@@ -21,3 +21,7 @@ jobs:
       - run:
           name: Build Dockerfile
           command: docker build -t arm-compiler .
+      - run:
+          command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+      - run:
+          command: docker push kenmu/arm-compiler
