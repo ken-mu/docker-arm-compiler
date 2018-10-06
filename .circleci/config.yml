@@ -20,7 +20,7 @@ jobs:
           command: chmod 755 ./Installer/setup.sh && ls -l ./Installer
       - run:
           name: Build Dockerfile
-          command: docker build -t arm-compiler:latest .
+          command: docker build -t kenmu/arm-compiler:latest .
       - run:
           command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
       - run:
