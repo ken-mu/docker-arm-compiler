@@ -22,6 +22,73 @@ jobs:
           name: Build Dockerfile
           command: docker build -t kenmu/arm-compiler:latest .
       - run:
+          name: Save image
+          command: docker image save kenmu/arm-compiler:latest > ./docker-image.tar
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./docker-image.tar
+
+  release-latest:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install Dependencies
+          command: apk update && apk add ca-certificates && update-ca-certificates && apk add openssl
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load image from tar
+          command: docker load -i ./docker-image.tar
+      - run:
           command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
       - run:
           command: docker push kenmu/arm-compiler
+
+  release-tag:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install Dependencies
+          command: apk update && apk add ca-certificates && update-ca-certificates && apk add openssl
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load image from tar
+          command: docker load -i ./docker-image.tar
+      - run:
+          name: Tag to latest
+          command: docker tag kenmu/arm-compiler:latest kenmu/arm-compiler:$CIRCLE_TAG
+      - run:
+          command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+      - run:
+          command: docker push kenmu/arm-compiler
+
+workflows:
+  version: 2
+  build_and_release:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - release-latest:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - release-tag:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^[0-9]+(\.[0-9]+){2}$/
