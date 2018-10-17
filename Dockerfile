@@ -6,4 +6,4 @@ ADD ./install.sh /tmp
 ADD mdk_elmaps.zip /tmp
 ENV PATH $PATH:/usr/local/ARM_Compiler_5.06u6/bin64
 RUN sh /tmp/install.sh
-RUN unzip /tmp/mdk_elmaps.zip && mv *.elmap /usr/local/ARM_Compiler_5/sw/mappings
+RUN unzip /tmp/mdk_elmaps.zip && mv *.elmap /usr/local/ARM_Compiler_5.06u6/sw/mappings
