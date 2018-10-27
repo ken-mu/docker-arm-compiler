@@ -11,6 +11,6 @@ ADD Keil_v5.zip /tmp
 
 ENV PATH $PATH:/usr/local/ARM_Compiler_5.06u6/bin64
 RUN sh /tmp/install.sh
-RUN unzip /tmp/Keil_v5.zip && unzip /tmp/mdk_elmaps.zip && mv *.elmap /usr/local/ARM_Compiler_5.06u6/sw/mappings
+RUN mkdir -p /root/.wine/drive_c && unzip /tmp/Keil_v5.zip -d /root/.wine/drive_c && unzip /tmp/mdk_elmaps.zip && mv *.elmap /usr/local/ARM_Compiler_5.06u6/sw/mappings
 
 ENTRYPOINT ["/entrypoint.sh"]
