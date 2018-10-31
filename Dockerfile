@@ -6,7 +6,8 @@ ENV PATH $PATH:/usr/local/ARM_Compiler_5.06u6/bin64
 RUN dpkg --add-architecture i386 && \
   apt-get update && \
   apt-get -y install lib32stdc++6 expect build-essential unzip && \
-  apt-get install wine1.6 -y
+  apt-get install wine1.6 -y && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY ./Installer /tmp
 COPY ./install.sh /tmp
