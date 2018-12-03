@@ -1,7 +1,6 @@
 FROM ubuntu:14.04
 
 ENV KEIL_HOME /root/.wine/drive_c/Keil_v5
-ENV PATH $PATH:/usr/local/ARM_Compiler_5.06u6/bin64
 
 RUN dpkg --add-architecture i386 && \
   apt-get update && \
@@ -23,6 +22,9 @@ COPY ./entrypoint.sh /
 COPY ./Keil_v5 $KEIL_HOME
 
 RUN sh /tmp/install.sh && \
-  mv $KEIL_HOME/ARM/sw/mappings/*.elmap /usr/local/ARM_Compiler_5.06u6/sw/mappings
+  ARM_COMPILER_DIR=$(ls -d $(find /usr/local/ARM*))
+  mv $KEIL_HOME/ARM/sw/mappings/*.elmap /usr/local/${ARM_COMPILER_DIR}/sw/mappings
+
+ENV PATH $PATH:/usr/local/${ARM_COMPILER_DIR}/bin64
 
 ENTRYPOINT ["/entrypoint.sh"]
