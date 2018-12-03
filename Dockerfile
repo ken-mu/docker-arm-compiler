@@ -22,7 +22,7 @@ COPY ./entrypoint.sh /
 COPY ./Keil_v5 $KEIL_HOME
 
 RUN sh /tmp/install.sh && \
-  ARM_COMPILER_DIR=$(ls -d $(find /usr/local/ARM*))
+  ARM_COMPILER_DIR=$(ls -d $(find /usr/local/ARM*)) && \
   mv $KEIL_HOME/ARM/sw/mappings/*.elmap /usr/local/${ARM_COMPILER_DIR}/sw/mappings
 
 ENV PATH $PATH:/usr/local/${ARM_COMPILER_DIR}/bin64
