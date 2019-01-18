@@ -4,7 +4,7 @@ ENV KEIL_HOME /root/.wine/drive_c/Keil_v5
 
 RUN dpkg --add-architecture i386 && \
   apt-get update && \
-  apt-get -y install lib32stdc++6 expect build-essential unzip git curl && \
+  apt-get -y install lib32stdc++6 expect build-essential unzip git curl libboost-all-dev && \
   apt-get install wine1.6 -y && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
   
